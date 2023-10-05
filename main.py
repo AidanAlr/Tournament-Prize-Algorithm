@@ -60,7 +60,7 @@ def other_payouts():
     payout_structure = {k:round(v*b90_perc,5) for k,v in zip(keys, values)}
     return payout_structure
 
-def run_program():
+def make_csv():
     t10 = top_10().copy()
     other = other_payouts().copy()
     t10.update(other)
@@ -77,4 +77,4 @@ def run_program():
     print("Your CSV has been created!")
 
 
-run_program()
+make_csv()
