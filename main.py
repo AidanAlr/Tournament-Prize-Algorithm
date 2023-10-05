@@ -6,7 +6,6 @@ if participants < 100:
     print("Too Few Participants")
     sys.exit()
 t10_perc = float(input('Enter the percentage of the prize pool you would like to allocate to top 10 as a decimel:'))
-# #
 prize_pool = (participants * 0.05)
 paid_participants = round(participants * 0.2)
 
@@ -24,8 +23,6 @@ def top_10():
                10: 0.04}
 
     if round(sum(t10_dic.values()), 2) == 1.0:
-        print("Top_10 Payouts Add Up Correctly")
-
         t10_payout_dic = {key: value * t10_perc for key, value in t10_dic.items()}
         return t10_payout_dic
 
@@ -63,14 +60,21 @@ def other_payouts():
     payout_structure = {k:round(v*b90_perc,5) for k,v in zip(keys, values)}
     return payout_structure
 
+def run_program():
+    t10 = top_10().copy()
+    other = other_payouts().copy()
+    t10.update(other)
+    #
+    final_payouts = {key: (value * prize_pool) for key, value in t10.items()}
+    print("These are your final payouts:")
+    print(final_payouts)
+    #
+    with open('payouts.csv', 'w') as csv_file:
+        writer = csv.writer(csv_file)
+        for key, value in final_payouts.items():
+            writer.writerow([key, value])
 
-t10 = top_10().copy()
-other = other_payouts().copy()
-t10.update(other)
+    print("Your CSV has been created!")
 
-final_payouts = {key: (value * prize_pool) for key, value in t10.items()}
 
-with open('payouts.csv', 'w') as csv_file:
-    writer = csv.writer(csv_file)
-    for key, value in final_payouts.items():
-        writer.writerow([key, value])
+run_program()
