@@ -4,11 +4,7 @@ import time
 
 
 def determine_a():
-    if participants > 10000:
-        max_alpha_const = 0.1
-    else:
-        max_alpha_const = 1
-    possibilities = [x / 10000.0 for x in range(1, round(winners * max_alpha_const * 100 + 1), 1)]
+    possibilities = [x / 10000.0 for x in range(1, ((2*10000) + 1), 1)]
     low = 0
     high = len(possibilities) - 1
 
@@ -23,6 +19,7 @@ def determine_a():
         # print(str(total) + ","+ str(left_eq))
         # print("low:" + str(possibilities[low]) + " mid :" + str(possibilities[mid]) + "   high:" + str(possibilities[high]))
         if left_eq - 0.01 * total <= total <= left_eq + 0.01 * total:
+            print("Alpha Found")
             return possibilities[mid]
         elif left_eq - 0.01 < total:
             low = mid + 1
@@ -32,6 +29,7 @@ def determine_a():
             total = 0
 
     if low == high:
+        print("Approx Alpha Found")
         return possibilities[mid]
     else:
         print("not Found")
@@ -44,12 +42,11 @@ def build_payouts():
 
 
 def make_csv(final_payouts):
-    with open('payouts.csv', 'w', newline='') as csv_file:
+    with open('prizes.csv', 'w', newline='') as csv_file:
         writer = csv.writer(csv_file)
         for key, value in final_payouts.items():
             writer.writerow([key, round(value, 2)])
-
-    print("Your CSV has been created!")
+    print("prizes.csv has been created!")
 
     seconds_left = 5
     while seconds_left:
@@ -62,7 +59,7 @@ def make_csv(final_payouts):
 
 
 participants = int(input('Please enter the number of participants: '))
-prize_pool = round(0.05 * participants, 2)
+prize_pool = round(0.05 * participants, 5)
 winners = round(participants * 0.2)
 
 top_prize = input(f"Enter custom first place in EUR. Leave blank for "
