@@ -2,6 +2,7 @@
 
 Hello, please enjoy this algorithm which will design a payout structure for your tournament.
   1. Enter the number of participants
-  2. Customise top prize
-  3. Customise min prize
-  4. Payouts returned as .csv file
+  2. Prize pool = 5% of participants EUR
+  3. Customise top prize
+  4. Customise min prize
+  5. Payouts returned as .csv file
