@@ -1,4 +1,3 @@
-import math
 import csv
 import sys
 import time
@@ -59,9 +58,6 @@ def make_csv(final_payouts):
         time.sleep(1)
         seconds_left -=1
         sys.stdout.flush()
-
-
-
     sys.exit(0)
 
 
@@ -69,16 +65,15 @@ participants = int(input('Please enter the number of participants: '))
 prize_pool = round(0.05 * participants, 2)
 winners = round(participants * 0.2)
 
-top_prize = input("Would you like set custom first place. Leave blank for "
-                  "default 0.15 ...")
+top_prize = input(f"Enter custom first place in EUR. Leave blank for "
+                  f"default 15% of prize pool = " + str(prize_pool*0.15) + "EUR: ")
 if not top_prize:
     top_prize = 0.15 * prize_pool
 else:
     top_prize = float(top_prize)
-    top_prize *= prize_pool
 
-min_prize = input("Would you like set custom min prize? Leave blank for "
-                  "default 0.0001% of prize pool...")
+min_prize = input(f"Enter custom min prize in EUR. Leave blank for "
+                  f"default 0.0001% of prize pool = " + str(prize_pool*0.000001) + "EUR: ")
 if not min_prize:
     min_prize = prize_pool * 0.000001
 else:
