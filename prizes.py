@@ -58,25 +58,27 @@ def make_csv(final_payouts) -> None:
     sys.stdout.write(f"Goodbye!")
     sys.exit(0)
 
+def main():
+    participants = int(input('Please enter the number of participants: '))
+    prize_pool = round(0.05 * participants, 5)
+    print("Prize Pool: " + str(prize_pool))
+    winners = round(participants * 0.2)
+    
+    top_prize = input(f"Enter custom first place in EUR. Leave blank for "
+                      f"default 15% of prize pool = " + str(prize_pool * 0.15) + "EUR: ")
+    if not top_prize:
+        top_prize = 0.15 * prize_pool
+    else:
+        top_prize = float(top_prize)
+    
+    min_prize = input(f"Enter custom min prize in EUR. Leave blank for "
+                      f"default 0.01 EUR: ")
+    if not min_prize:
+        min_prize = 0.01
+    else:
+        min_prize = float(min_prize)
+    
+    alpha = determine_a()
+    make_csv(build_payouts())
 
-participants = int(input('Please enter the number of participants: '))
-prize_pool = round(0.05 * participants, 5)
-print("Prize Pool: " + str(prize_pool))
-winners = round(participants * 0.2)
-
-top_prize = input(f"Enter custom first place in EUR. Leave blank for "
-                  f"default 15% of prize pool = " + str(prize_pool * 0.15) + "EUR: ")
-if not top_prize:
-    top_prize = 0.15 * prize_pool
-else:
-    top_prize = float(top_prize)
-
-min_prize = input(f"Enter custom min prize in EUR. Leave blank for "
-                  f"default 0.01 EUR: ")
-if not min_prize:
-    min_prize = 0.01
-else:
-    min_prize = float(min_prize)
-
-alpha = determine_a()
-make_csv(build_payouts())
+main()
