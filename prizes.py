@@ -10,17 +10,6 @@ def make_csv(final_payouts) -> None:
             writer.writerow([key, round(value, 2)])
 
     print("prizes.csv has been created!")
-    seconds_left = 5
-    while seconds_left:
-        sys.stdout.write("\r")
-        sys.stdout.write(f"Closing in {seconds_left}")
-        time.sleep(1)
-        seconds_left -= 1
-        sys.stdout.flush()
-
-    sys.stdout.write("\r")
-    sys.stdout.write("Goodbye!")
-    sys.exit(0)
 
 
 def determine_a(prize_pool, top_prize, min_prize, winners) -> float:
@@ -78,6 +67,18 @@ def main():
 
     alpha = determine_a(prize_pool=prize_pool, top_prize=top_prize, min_prize=min_prize,winners=winners)
     make_csv(build_payouts(top_prize=top_prize, min_prize=min_prize, winners=winners, alpha=alpha))
+
+    seconds_left = 5
+    while seconds_left:
+        sys.stdout.write("\r")
+        sys.stdout.write(f"Closing in {seconds_left}")
+        time.sleep(1)
+        seconds_left -= 1
+        sys.stdout.flush()
+
+    sys.stdout.write("\r")
+    sys.stdout.write("Goodbye!")
+    sys.exit(0)
 
 
 if __name__ == '__main__':
