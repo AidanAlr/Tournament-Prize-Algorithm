@@ -8,3 +8,9 @@ This is an algorithm that I designed for the mobile app Winerz, they required an
   3. Customise top prize
   4. Customise min prize
   5. Payouts returned as .csv file
+
+## User Example JPG:
+![user_example.png](user_example.png)
+
+## Output Example JPG:
+![output_example.png](output_example.png)
