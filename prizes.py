@@ -4,6 +4,7 @@ import time
 
 
 def main():
+    
     def determine_a() -> float:
         possibilities = [x / 10000.0 for x in range(1, ((2 * 10000) + 1), 1)]
         low = 0
@@ -35,11 +36,13 @@ def main():
         else:
             print("not Found")
 
+    
     def build_payouts() -> dict:
         keys = list(range(1, winners + 1))
         output = {k: (min_prize + ((top_prize - min_prize) / (k ** alpha))) for k in keys}
         return output
 
+    
     def make_csv(final_payouts) -> None:
         with open('prizes.csv', 'w', newline='') as csv_file:
             writer = csv.writer(csv_file)
@@ -59,6 +62,7 @@ def main():
         sys.stdout.write(f"Goodbye!")
         sys.exit(0)
 
+    
     participants = int(input('Please enter the number of participants: '))
     prize_pool = round(0.05 * participants, 5)
     print("Prize Pool: " + str(prize_pool))
