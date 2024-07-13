@@ -46,11 +46,8 @@ def determine_a(top_prize, min_prize, winners, prize_pool) -> float:
         elif money_to_be_allocated_to_larger_than_min_prize + 0.01 > total_prize_pool:
             high = mid - 1
 
-    if low == high:
-        print("Approx Alpha Found")
-        return possibilities[mid]
-
-    print("not Found")
+    print("No exact alpha found! Try adjusting the inputs for a more precise output!")
+    return possibilities[mid]
 
 
 def get_payout_for_placing(place, top_prize, min_prize, alpha) -> float:
