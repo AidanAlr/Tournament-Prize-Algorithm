@@ -65,36 +65,41 @@ def build_payouts_dictionary(top_prize, min_prize, winners, prize_pool) -> dict:
 
 
 def interactive_input():
-    participants = int(input('Please enter the number of participants: '))
-    prize_pool = round(0.05 * participants, 4)
-    print(f"Prize Pool: {prize_pool}")
+    try:
+        participants = int(input('Please enter the number of participants: '))
+        prize_pool = round(float(input('Please enter the prize pool:')), 2)
+        print(f"Prize Pool: {prize_pool}")
 
-    top_prize_payout = round(0.15 * prize_pool, 4)
-    top_prize_input = input(
-        f"Enter custom first place in EUR. Leave blank for default 15% of prize pool = {top_prize_payout}:")
-    top_prize = 0.15 * prize_pool
-    if top_prize_input:
-        top_prize = float(top_prize_input)
+        top_prize_payout = round(0.15 * prize_pool, 4)
+        top_prize_input = input(
+            f"Enter custom first place in EUR. Leave blank for default 15% of prize pool = {top_prize_payout}:")
+        top_prize = 0.15 * prize_pool
+        if top_prize_input:
+            top_prize = float(top_prize_input)
 
-    min_prize = 0.01
-    min_prize_input = input("Enter custom min prize. Leave blank for default 0.01: ")
-    if min_prize_input:
-        min_prize = float(min_prize_input)
+        min_prize = 0.01
+        min_prize_input = input("Enter custom min prize. Leave blank for default 0.01: ")
+        if min_prize_input:
+            min_prize = float(min_prize_input)
 
-    number_of_winners = round(participants * 0.2)
-    winners_prompt = f"Enter custom number of winners. Leave blank for default 20% of participants = {number_of_winners}:"
-    winners_input = input(winners_prompt)
-    if winners_input:
-        number_of_winners = int(winners_input)
+        number_of_winners = round(participants * 0.2)
+        winners_prompt = f"Enter custom number of winners. Leave blank for default 20% of participants = {number_of_winners}:"
+        winners_input = input(winners_prompt)
+        if winners_input:
+            number_of_winners = int(winners_input)
 
-    result_dict = {
-        "top_prize": top_prize,
-        "min_prize": min_prize,
-        "winners": number_of_winners,
-        "prize_pool": prize_pool
-    }
+        result_dict = {
+            "top_prize": top_prize,
+            "min_prize": min_prize,
+            "winners": number_of_winners,
+            "prize_pool": prize_pool
+        }
 
-    return result_dict
+        return result_dict
+
+    except ValueError:
+        print("You entered an illegal value! Rerunning the program")
+        return interactive_input()
 
 
 def main():
