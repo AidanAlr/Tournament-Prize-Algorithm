@@ -25,7 +25,7 @@ def acceptable_prize_pool(money_to_be_allocated_to_larger_than_min_prize, total_
     return money_to_be_allocated_to_larger_than_min_prize - prize_pool_margin <= total_prize_pool <= money_to_be_allocated_to_larger_than_min_prize + prize_pool_margin
 
 
-def determine_a(prize_pool, top_prize, min_prize, winners) -> float:
+def determine_a(top_prize, min_prize, winners, prize_pool) -> float:
     possibilities = [x / 10000.0 for x in range(1, ((2 * 10000) + 1), 1)]
     low = 0
     high = len(possibilities) - 1
@@ -53,13 +53,14 @@ def determine_a(prize_pool, top_prize, min_prize, winners) -> float:
     print("not Found")
 
 
-def get_payout_for_place(place, top_prize, min_prize, alpha) -> float:
+def get_payout_for_placing(place, top_prize, min_prize, alpha) -> float:
     return min_prize + ((top_prize - min_prize) / (place ** alpha))
 
 
-def build_payouts_dictionary(top_prize, min_prize, winners, alpha) -> dict:
+def build_payouts_dictionary(top_prize, min_prize, winners, prize_pool) -> dict:
     placing_list = list(range(1, winners + 1))
-    output = {placing: get_payout_for_place(placing, top_prize, min_prize, alpha) for placing in placing_list}
+    alpha = determine_a(top_prize, min_prize, winners, prize_pool)
+    output = {placing: get_payout_for_placing(placing, top_prize, min_prize, alpha) for placing in placing_list}
     return output
 
 
@@ -98,13 +99,7 @@ def interactive_input():
 
 def main():
     user_input = interactive_input()
-    top_prize = user_input["top_prize"]
-    min_prize = user_input["min_prize"]
-    winners = user_input["winners"]
-    prize_pool = user_input["prize_pool"]
-
-    alpha = determine_a(prize_pool=prize_pool, top_prize=top_prize, min_prize=min_prize, winners=winners)
-    payouts_dict = build_payouts_dictionary(top_prize=top_prize, min_prize=min_prize, winners=winners, alpha=alpha)
+    payouts_dict = build_payouts_dictionary(**user_input)
     make_csv(payouts_dict)
 
     sys.stdout.write("Goodbye!")
