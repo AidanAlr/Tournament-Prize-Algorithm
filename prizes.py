@@ -19,6 +19,12 @@ def get_total_prize_pool_for_alpha(alpha, top_prize, min_prize, winners) -> floa
     return total
 
 
+def acceptable_prize_pool(money_to_be_allocated_to_larger_than_min_prize, total_prize_pool):
+    prize_pool_margin = 0.01 * total_prize_pool
+
+    return money_to_be_allocated_to_larger_than_min_prize - prize_pool_margin <= total_prize_pool <= money_to_be_allocated_to_larger_than_min_prize + prize_pool_margin
+
+
 def determine_a(prize_pool, top_prize, min_prize, winners) -> float:
     possibilities = [x / 10000.0 for x in range(1, ((2 * 10000) + 1), 1)]
     low = 0
@@ -30,7 +36,7 @@ def determine_a(prize_pool, top_prize, min_prize, winners) -> float:
         mid = int((low + high) // 2)
         total_prize_pool = get_total_prize_pool_for_alpha(possibilities[mid], top_prize, min_prize, winners)
 
-        if money_to_be_allocated_to_larger_than_min_prize - 0.01 * total_prize_pool <= total_prize_pool <= money_to_be_allocated_to_larger_than_min_prize + 0.01 * total_prize_pool:
+        if acceptable_prize_pool(money_to_be_allocated_to_larger_than_min_prize, total_prize_pool):
             print("Alpha Found")
             return possibilities[mid]
 
