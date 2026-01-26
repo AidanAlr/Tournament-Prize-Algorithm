@@ -182,16 +182,22 @@ def build_payouts_dictionary(top_prize: float, min_prize: float, winners: int, p
         if diff_cents != 0:
             print(f"Adjusting rounding difference of {diff}...")
             idx = 0
+            skips = 0 # Safety guard for infinite loop
             while diff_cents != 0:
                 if diff_cents > 0:
                     final_payouts[idx] += 0.01
                     diff_cents -= 1
+                    skips = 0
                 else:
                     if final_payouts[idx] > min_prize:
                         final_payouts[idx] -= 0.01
                         diff_cents += 1
+                        skips = 0
                     else:
-                        pass 
+                        skips += 1
+                        if skips >= winners:
+                            print("Warning: Could not fully adjust rounding due to min_prize constraints.")
+                            break
                 idx = (idx + 1) % winners
 
         return {i + 1: val for i, val in enumerate(final_payouts)}
